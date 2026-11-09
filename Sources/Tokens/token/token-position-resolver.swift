@@ -23,8 +23,8 @@ public enum TokenPositionResolver {
     ) -> LineRange {
         let lineTable = LineTable(text: text)
 
-        let start = lineTable.lineAndColumn(
-            at: range.startoffset
+        let start = lineTable.position(
+            at: PositionIndex(range.startoffset)
         )
 
         let inclusiveEndOffset = range.isEmpty
@@ -34,8 +34,8 @@ public enum TokenPositionResolver {
                 range.endoffset - 1
             )
 
-        let end = lineTable.lineAndColumn(
-            at: inclusiveEndOffset
+        let end = lineTable.position(
+            at: PositionIndex(inclusiveEndOffset)
         )
 
         return LineRange(
