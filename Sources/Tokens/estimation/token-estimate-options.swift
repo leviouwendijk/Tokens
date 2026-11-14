@@ -138,22 +138,27 @@ public struct TokenEstimationOptions: Sendable, Codable, Hashable {
         safetyMarginPercent: 18
     )
 
+    /// Model-request JSON (schemas, messages, tool results). Calibrated
+    /// 2026-11-14 against provider-reported input on HostYourAI DeepSeek V4
+    /// Flash: estimates were 1.01–1.10× actual (mean 1.05), always above.
+    /// The previous conservative preset overcounted JSON 2.3×. Re-check
+    /// against other tokenizers as their usage becomes available.
     public static let agenticContext: Self = .init(
-        mode: .conservative,
-        splitIdentifierComponents: true,
-        emitWhitespaceTokens: true,
+        mode: .fast,
+        splitIdentifierComponents: false,
+        emitWhitespaceTokens: false,
         coalesceAdjacentSeparators: true,
         wordCharactersPerToken: 4,
-        numberCharactersPerToken: 3,
-        identifierCharactersPerToken: 3,
-        separatorCharactersPerToken: 1,
-        symbolCharactersPerToken: 1,
-        whitespaceCharactersPerToken: 12,
-        whitespaceRunMinimumTokens: 1,
-        newlineTokenCost: 1,
-        lineOverheadTokenEvery: 8,
-        framingOverheadTokens: 12,
-        safetyMarginPercent: 22
+        numberCharactersPerToken: 4,
+        identifierCharactersPerToken: 4,
+        separatorCharactersPerToken: 4,
+        symbolCharactersPerToken: 2,
+        whitespaceCharactersPerToken: 64,
+        whitespaceRunMinimumTokens: 0,
+        newlineTokenCost: 0,
+        lineOverheadTokenEvery: 40,
+        framingOverheadTokens: 0,
+        safetyMarginPercent: 8
     )
 
     public static let defaults: Self = .balanced
